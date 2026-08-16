@@ -117,6 +117,38 @@ In Kiro chat, invoke a skill by name:
 
 ---
 
+## Going further: Custom Agents
+
+Skills are instructions the agent loads on demand. **Custom agents** go one step further — they pre-wire the skills, project context, tool permissions, and a system prompt into a dedicated agent you switch to by name.
+
+Create `.kiro/agents/rust-code-review.md` in your project:
+
+```markdown
+---
+name: rust-code-review
+description: Senior Rust code reviewer. Reviews git changes for unsafe soundness, async hazards, ownership issues, and performance.
+tools:
+  - read
+  - shell
+permissions:
+  rules:
+    - capability: shell
+      match: ["git *", "cargo clippy *", "cargo check *"]
+      effect: allow
+resources:
+  - skill://.kiro/skills/rust-code-review/SKILL.md
+  - file://.kiro/steering/skills.md
+welcomeMessage: "Ready to review. Say **review** or give me a commit range."
+---
+
+You are a senior Rust engineer performing code review.
+Add any project-specific rules here — hot path constraints, MSRV, naming conventions, etc.
+```
+
+Then switch to the agent in Kiro and it comes pre-loaded with the skill, your project context, and shell access scoped to `git` and `cargo` only — no extra setup per session.
+
+---
+
 ## Customizing for Your Project
 
 Each skill's references are plain Markdown files — you can fork this repo and edit them to match your team's conventions. Common things to customize:
