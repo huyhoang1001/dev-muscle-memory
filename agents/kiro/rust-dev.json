@@ -1,7 +1,6 @@
 {
   "name": "rust-dev",
   "description": "Rust development assistant. Implements features, debugs compiler errors, designs APIs, and navigates Rust codebases with knowledge of idiomatic patterns and the ecosystem.",
-  "model": "claude-sonnet-4",
   "tools": ["read", "write", "shell"],
   "resources": [
     "skill://.kiro/skills/rust-dev/SKILL.md"

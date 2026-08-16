@@ -1,7 +1,6 @@
 {
   "name": "rust-code-review",
   "description": "Senior Rust code reviewer. Reviews git changes for unsafe soundness, async hazards, ownership issues, error handling, and performance — the things the compiler cannot catch.",
-  "model": "claude-sonnet-4",
   "tools": ["read", "shell"],
   "resources": [
     "skill://.kiro/skills/rust-code-review/SKILL.md"

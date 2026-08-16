@@ -2,6 +2,18 @@
 
 Ready-to-use agent configs for [Kiro](https://kiro.dev). These are the platform-specific counterpart to the skills in `../../skills/`.
 
+## Model selection
+
+The agent configs don't specify a model — they use whatever you've set as your Kiro default. To use a specific model for an agent, add a `"model"` field:
+
+```json
+{
+  "model": "claude-sonnet-4"
+}
+```
+
+Use `/model` in Kiro chat to see available model IDs on your account.
+
 ## How to use
 
 ### Option A — Copy into your project (project-scoped)
