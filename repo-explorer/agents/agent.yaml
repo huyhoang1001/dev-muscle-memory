@@ -1,0 +1,7 @@
+interface:
+  display_name: "Repo Explorer"
+  short_description: "Map any repository: architecture, modules, data flow, dependencies, and conventions."
+  default_prompt: "Explore this repository and produce a full repo map including module responsibilities, architecture pattern, data flow, key dependencies, and coding conventions."
+
+# Agent-agnostic skill - works with any LLM provider.
+# No provider-specific configuration required.
