@@ -1,6 +1,10 @@
 ---
 name: rust-code-review
 description: "Senior-level code review for Rust codebases. Covers ownership/borrowing, unsafe correctness, async/cancellation safety, error handling, performance, and API design — the things the compiler can't catch."
+license: MIT
+metadata:
+  author: huyhoang1001
+  version: "1.0"
 ---
 
 # Rust Code Review

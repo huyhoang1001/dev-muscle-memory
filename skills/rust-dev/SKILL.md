@@ -1,6 +1,10 @@
 ---
 name: rust-dev
 description: "Rust development assistant. Helps design idiomatic APIs, structure crates, choose the right patterns, debug tricky compiler errors, and navigate the Rust ecosystem tooling."
+license: MIT
+metadata:
+  author: huyhoang1001
+  version: "1.0"
 ---
 
 # Rust Dev

@@ -1,6 +1,10 @@
 ---
 name: repo-explorer
 description: "Deep dive into any repository to understand its structure, architecture, key modules, and dependencies. Produces a clear mental map for navigating and working in an unfamiliar codebase."
+license: MIT
+metadata:
+  author: huyhoang1001
+  version: "1.0"
 ---
 
 # Repo Explorer
