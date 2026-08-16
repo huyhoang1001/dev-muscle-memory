@@ -8,7 +8,13 @@ Rust-focused AI agent skills. Install with one command, works across 30+ agents.
 npx skills add huyhoang1001/dev-muscle-memory
 ```
 
-That's it. `npx skills` handles the rest — detects which agents you have installed (Kiro, Claude Code, Cursor, etc.), asks which skills you want, and drops them in the right place.
+That's it for most agents. `npx skills` auto-detects which agents you have installed and drops skills in the right place.
+
+**For Kiro specifically** — since Kiro runs as an IDE rather than a CLI binary, the auto-detector won't find it. Use `--copy -a kiro-cli` to install directly into `.kiro/skills/`:
+
+```bash
+npx skills add huyhoang1001/dev-muscle-memory --all -a kiro-cli --copy -y
+```
 
 ### Options
 
