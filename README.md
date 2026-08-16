@@ -33,36 +33,44 @@ Maps any repository's architecture, modules, data flow, and conventions. Produce
 
 ## Setup in Your Repo
 
-### 1. Declare the skills (`skills-lock.json`)
+### 1. Import the skills into Kiro
 
-Create a `skills-lock.json` at the root of your repo. List whichever skills you want:
+Skills must live in `.kiro/skills/` (project) or `~/.kiro/skills/` (global) to appear as slash commands. The easiest way is to import directly from this repo via the Kiro UI:
 
-```json
-{
-  "skills": [
-    {
-      "name": "rust-code-review",
-      "source": "huyhoang1001/dev-muscle-memory",
-      "path": "rust-code-review",
-      "description": "Senior Rust code review: unsafe soundness, async hazards, ownership, error handling, performance, API design."
-    },
-    {
-      "name": "rust-dev",
-      "source": "huyhoang1001/dev-muscle-memory",
-      "path": "rust-dev",
-      "description": "Hands-on Rust assistant: compiler errors, API design, pattern selection, crate recommendations, tooling setup."
-    },
-    {
-      "name": "repo-explorer",
-      "source": "huyhoang1001/dev-muscle-memory",
-      "path": "repo-explorer",
-      "description": "Map any repository: architecture, modules, data flow, dependencies, and conventions."
-    }
-  ]
-}
+1. Open the **Kiro panel** in the IDE sidebar
+2. Go to **Agent Steering & Skills**
+3. Click **+** → **Import a skill** → **GitHub**
+4. Paste the URL for each skill you want:
+
+| Skill | GitHub URL |
+|-------|-----------|
+| `rust-code-review` | `https://github.com/huyhoang1001/dev-muscle-memory/tree/main/rust-code-review` |
+| `rust-dev` | `https://github.com/huyhoang1001/dev-muscle-memory/tree/main/rust-dev` |
+| `repo-explorer` | `https://github.com/huyhoang1001/dev-muscle-memory/tree/main/repo-explorer` |
+
+Kiro copies the skill into `.kiro/skills/` and it becomes a slash command immediately.
+
+**For global install** (available in all your projects): same flow — Kiro will place it in `~/.kiro/skills/` instead.
+
+**For Kiro CLI**: same import flow, or copy the skill folder directly into `~/.kiro/skills/skill-name/`.
+
+### 2. Invoke
+
+In Kiro chat, type `/` to see available skills, then select:
+
+```
+/rust-code-review
+```
+```
+/rust-dev  how should I design this error type?
+```
+```
+/repo-explorer
 ```
 
-### 2. Add a project context steering file (recommended)
+Kiro also auto-activates skills when your request matches the skill description — so asking *"review my latest git changes"* may trigger `rust-code-review` automatically.
+
+### 3. Add a project context steering file (recommended)
 
 The skills work out of the box, but they get significantly better when you give them project-specific context upfront — things like your hot path rules, MSRV, conventions, and module responsibilities that the agent would otherwise have to rediscover every session.
 
@@ -105,12 +113,6 @@ In Kiro chat, invoke a skill by name:
 ```
 ```
 /repo-explorer
-```
-
-To load your project context alongside a skill:
-
-```
-#skills /rust-code-review
 ```
 
 ---
