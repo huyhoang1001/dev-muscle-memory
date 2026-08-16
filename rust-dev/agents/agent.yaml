@@ -1,7 +1,0 @@
-interface:
-  display_name: "Rust Dev"
-  short_description: "Hands-on Rust assistant: compiler errors, API design, pattern selection, crate recommendations, tooling setup."
-  default_prompt: "Help me with this Rust development task. Explain the best approach, show idiomatic code, and tell me what crates or patterns to use."
-
-# Agent-agnostic skill - works with any LLM provider.
-# No provider-specific configuration required.

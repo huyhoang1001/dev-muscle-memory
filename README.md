@@ -1,161 +1,135 @@
 # dev-muscle-memory
 
-A personal collection of AI agent skills focused on Rust development. Works with [Kiro](https://kiro.dev) and any agent that supports the skill format.
+Personal AI agent skills and configs for Rust development. Built to work with Kiro today, structured to extend to Claude, Cursor, or any other agentic tool tomorrow.
+
+## Structure
+
+```
+dev-muscle-memory/
+├── skills/                        # Portable, platform-agnostic prompt packages
+│   ├── rust-code-review/          # Rust code review — unsafe, async, ownership, perf
+│   ├── rust-dev/                  # Rust dev assistant — patterns, crates, tooling
+│   └── repo-explorer/             # Repo mapping — architecture, modules, data flow
+└── agents/                        # Platform-specific agent configs
+    └── kiro/                      # Kiro IDE/CLI agent JSONs
+        ├── rust-code-review.json
+        └── rust-dev.json
+```
+
+**Skills** are portable instruction packages following the [Agent Skills](https://agentskills.io/) standard. They contain the actual knowledge — checklists, patterns, reference guides. They work anywhere: Kiro, Claude Projects, any compatible tool.
+
+**Agents** are platform-specific wrappers. They define model, tools, permissions, and wire in the skills + project context. Adding support for a new platform means adding a new folder under `agents/` — skills stay untouched.
+
+---
 
 ## Skills
 
-### [`rust-code-review`](./rust-code-review/)
+### [`skills/rust-code-review`](./skills/rust-code-review/)
 
 Senior-level Rust code review. Covers what the compiler **cannot** catch:
 
-- Unsafe soundness (SAFETY comments, FFI, transmute)
-- Async hazards (blocking, Mutex across `.await`, cancellation safety)
-- Ownership misuse (unnecessary clones, Arc overuse, Cow opportunities)
-- Error handling (thiserror/anyhow split, unwrap in production, error chains)
-- Performance (collect(), allocations, Box<dyn> in hot paths)
-- API design (idiomatic Rust, #[must_use], #[non_exhaustive], newtype pattern)
+- **Unsafe soundness** — SAFETY comments, FFI contracts, transmute, invariants
+- **Async hazards** — blocking in async, Mutex across `.await`, cancellation safety in `select!`
+- **Ownership** — unnecessary clones, Arc overuse, Cow opportunities
+- **Error handling** — thiserror/anyhow split, unwrap in production, error chains
+- **Performance** — collect(), allocations, Box\<dyn\> in hot paths
+- **API design** — idiomatic Rust, #[must_use], #[non_exhaustive], newtype pattern
 
-### [`rust-dev`](./rust-dev/)
+### [`skills/rust-dev`](./skills/rust-dev/)
 
 Hands-on Rust development assistant:
 
-- Compiler error triage — explains root cause, not just the fix
-- API design guidance — types, error design, builder patterns
-- Pattern selection — typestate, state machine, sealed traits, retry, etc.
+- Compiler error triage — root cause, not just "add .clone()"
+- API design — types, error design, builder patterns
+- Pattern selection — typestate, state machine, sealed traits, retry, cancellation tokens
 - Crate recommendations — curated list by use case
 - Project structure — workspace layout, feature flags, CI config
 
-### [`repo-explorer`](./repo-explorer/)
+### [`skills/repo-explorer`](./skills/repo-explorer/)
 
-Maps any repository's architecture, modules, data flow, and conventions. Produces a structured repo map to navigate an unfamiliar codebase confidently.
-
----
-
-## Setup in Your Repo
-
-### 1. Import the skills into Kiro
-
-Skills must live in `.kiro/skills/` (project) or `~/.kiro/skills/` (global) to appear as slash commands. The easiest way is to import directly from this repo via the Kiro UI:
-
-1. Open the **Kiro panel** in the IDE sidebar
-2. Go to **Agent Steering & Skills**
-3. Click **+** → **Import a skill** → **GitHub**
-4. Paste the URL for each skill you want:
-
-| Skill | GitHub URL |
-|-------|-----------|
-| `rust-code-review` | `https://github.com/huyhoang1001/dev-muscle-memory/tree/main/rust-code-review` |
-| `rust-dev` | `https://github.com/huyhoang1001/dev-muscle-memory/tree/main/rust-dev` |
-| `repo-explorer` | `https://github.com/huyhoang1001/dev-muscle-memory/tree/main/repo-explorer` |
-
-Kiro copies the skill into `.kiro/skills/` and it becomes a slash command immediately.
-
-**For global install** (available in all your projects): same flow — Kiro will place it in `~/.kiro/skills/` instead.
-
-**For Kiro CLI**: same import flow, or copy the skill folder directly into `~/.kiro/skills/skill-name/`.
-
-### 2. Invoke
-
-In Kiro chat, type `/` to see available skills, then select:
-
-```
-/rust-code-review
-```
-```
-/rust-dev  how should I design this error type?
-```
-```
-/repo-explorer
-```
-
-Kiro also auto-activates skills when your request matches the skill description — so asking *"review my latest git changes"* may trigger `rust-code-review` automatically.
-
-### 3. Add a project context steering file (recommended)
-
-The skills work out of the box, but they get significantly better when you give them project-specific context upfront — things like your hot path rules, MSRV, conventions, and module responsibilities that the agent would otherwise have to rediscover every session.
-
-Create `.kiro/steering/skills.md`:
-
-```markdown
----
-inclusion: manual
----
-
-# Agent Skills — <your-project>
-
-## `/rust-code-review` conventions
-
-- Crate type: lib / bin
-- MSRV: x.xx
-- Hot path rules: (e.g. "no allocations in `allocator.rs`")
-- Concurrency model: (e.g. "use SafeMutex, not raw Mutex")
-- Error handling: (e.g. "library crate — thiserror only, no unwrap on hot path")
-- Feature flags: (list optional features that must compile independently)
-
-## `/rust-dev` context
-
-- Where to add new features: (e.g. "new metric → metrics.rs + analysis.rs + lib.rs")
-- Patterns to follow: (e.g. "atomic counters for hot path, lazy_static for globals")
-- What to avoid: (e.g. "no new global statics without justification")
-```
-
-The `inclusion: manual` front matter means this file is only loaded when you explicitly reference it with `#skills` in chat — keeping it out of every prompt but available when you need it.
-
-### 3. Use the skills
-
-In Kiro chat, invoke a skill by name:
-
-```
-/rust-code-review
-```
-```
-/rust-dev  how should I design this error type?
-```
-```
-/repo-explorer
-```
+Maps any repository's architecture, modules, data flow, dependencies, and conventions. Produces a structured map to navigate an unfamiliar codebase confidently.
 
 ---
 
-## Going further: Custom Agents
+## Setup
 
-Skills are instructions the agent loads on demand. **Custom agents** go one step further — they pre-wire the skills, project context, tool permissions, and a system prompt into a dedicated agent you switch to by name.
+### Step 1 — Import skills into Kiro
 
-Create `.kiro/agents/rust-code-review.md` in your project:
+Skills live in `.kiro/skills/` (project) or `~/.kiro/skills/` (global).
 
-```markdown
----
-name: rust-code-review
-description: Senior Rust code reviewer. Reviews git changes for unsafe soundness, async hazards, ownership issues, and performance.
-tools:
-  - read
-  - shell
-permissions:
-  rules:
-    - capability: shell
-      match: ["git *", "cargo clippy *", "cargo check *"]
-      effect: allow
-resources:
-  - skill://.kiro/skills/rust-code-review/SKILL.md
-  - file://.kiro/steering/skills.md
-welcomeMessage: "Ready to review. Say **review** or give me a commit range."
----
+Import via **Kiro panel → Agent Steering & Skills → + → Import → GitHub**:
 
-You are a senior Rust engineer performing code review.
-Add any project-specific rules here — hot path constraints, MSRV, naming conventions, etc.
+| Skill | URL |
+|-------|-----|
+| `rust-code-review` | `https://github.com/huyhoang1001/dev-muscle-memory/tree/main/skills/rust-code-review` |
+| `rust-dev` | `https://github.com/huyhoang1001/dev-muscle-memory/tree/main/skills/rust-dev` |
+| `repo-explorer` | `https://github.com/huyhoang1001/dev-muscle-memory/tree/main/skills/repo-explorer` |
+
+Once imported, type `/rust-code-review` in chat to invoke as a slash command.
+
+### Step 2 — Install agent configs (optional but recommended)
+
+Agent configs pre-wire the skills, model, tool permissions, and a system prompt into a named agent you switch to by name — no manual context loading per session.
+
+```bash
+# Project-scoped (just this repo)
+cp agents/kiro/rust-code-review.json .kiro/agents/
+cp agents/kiro/rust-dev.json .kiro/agents/
+
+# Or global (all projects)
+cp agents/kiro/rust-code-review.json ~/.kiro/agents/
+cp agents/kiro/rust-dev.json ~/.kiro/agents/
 ```
 
-Then switch to the agent in Kiro and it comes pre-loaded with the skill, your project context, and shell access scoped to `git` and `cargo` only — no extra setup per session.
+Then switch agents via the **agent picker in the bottom bar of the Kiro chat input**.
+
+### Step 3 — Add project context (recommended)
+
+The base agents work on any Rust project. For project-specific rules (hot path constraints, MSRV, module conventions), add a steering file and reference it in the agent JSON:
+
+```
+.kiro/steering/skills.md    ← your project's conventions for the agent
+```
+
+```json
+{
+  "resources": [
+    "skill://.kiro/skills/rust-code-review/SKILL.md",
+    "file://.kiro/steering/structure.md",
+    "file://.kiro/steering/skills.md"
+  ]
+}
+```
+
+See the `heap-sentry` project for a complete example.
 
 ---
 
-## Customizing for Your Project
+## Extending to other platforms
 
-Each skill's references are plain Markdown files — you can fork this repo and edit them to match your team's conventions. Common things to customize:
+To add Claude, Cursor, or another tool:
 
-- **`rust-code-review/references/rust-unsafe.md`** — add project-specific unsafe invariants
-- **`rust-dev/references/rust-crates.md`** — add or remove crates you've standardized on
-- **`rust-dev/references/rust-project-structure.md`** — match your workspace layout
+```
+agents/
+├── kiro/           ✓ done
+├── claude/         → Claude Projects instructions + tool configs
+└── cursor/         → .cursorrules or cursor agent format
+```
+
+Skills in `skills/` never change — only the platform adapter in `agents/` gets added.
+
+---
+
+## Customizing
+
+Reference files in `skills/*/references/` are plain Markdown — fork and edit to match your team's conventions:
+
+| File | What to customize |
+|------|------------------|
+| `rust-code-review/references/rust-unsafe.md` | Project-specific unsafe invariants |
+| `rust-code-review/references/rust-async.md` | Async runtime conventions |
+| `rust-dev/references/rust-crates.md` | Your standardized crate list |
+| `rust-dev/references/rust-project-structure.md` | Your workspace layout |
 
 ---
 

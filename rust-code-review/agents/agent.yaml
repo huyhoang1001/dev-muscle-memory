@@ -1,7 +1,0 @@
-interface:
-  display_name: "Rust Code Review"
-  short_description: "Senior Rust code review: unsafe soundness, async hazards, ownership, error handling, performance, API design."
-  default_prompt: "Review the current git changes in this Rust codebase. Focus on unsafe soundness, async/cancellation safety, unnecessary clones, error handling patterns, performance footguns, and idiomatic API design — the things the compiler cannot catch."
-
-# Agent-agnostic skill - works with any LLM provider.
-# No provider-specific configuration required.
