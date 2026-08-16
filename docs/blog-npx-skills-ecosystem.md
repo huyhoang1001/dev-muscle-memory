@@ -211,18 +211,48 @@ This is the npm moment for agent context. Before npm, distributing JavaScript li
 
 ## Publishing Your Own Skills
 
-Making your skills installable via `npx skills` requires nothing beyond putting `SKILL.md` files in the right place in a public GitHub repository.
+Making your skills installable via `npx skills` requires nothing beyond putting `SKILL.md` files in the right place in a public GitHub repository. To match community conventions (and get the most out of skills.sh), the recommended structure is:
 
 ```
 your-skills-repo/
 ├── README.md
+├── AGENTS.md              # guidance for agents contributing to this repo
+├── skills.sh.json         # grouping metadata for the skills.sh directory
 └── skills/
     ├── my-first-skill/
     │   ├── SKILL.md
+    │   ├── metadata.json  # version, author, abstract, references
     │   └── references/
     │       └── detailed-guide.md
     └── my-second-skill/
-        └── SKILL.md
+        ├── SKILL.md
+        └── metadata.json
+```
+
+**`skills.sh.json`** lets you define groupings that appear on your skills.sh profile page:
+
+```json
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "groupings": [
+    {
+      "title": "Rust",
+      "skills": ["rust-code-review", "rust-dev"]
+    }
+  ]
+}
+```
+
+**`metadata.json`** per skill gives the directory rich context:
+
+```json
+{
+  "version": "1.0.0",
+  "author": "yourname",
+  "date": "August 2026",
+  "abstract": "What this skill does in detail.",
+  "references": ["https://relevant-docs.example.com"]
+}
 ```
 
 ```bash
@@ -307,6 +337,9 @@ npx skills add owner/repo --list
 
 # Install specific skills to specific agents
 npx skills add owner/repo --skill my-skill -a kiro-cli -a claude-code
+
+# Kiro users: install directly into .kiro/skills/ (Kiro isn't a CLI binary so needs --copy)
+npx skills add owner/repo --all -a kiro-cli --copy -y
 
 # Install globally
 npx skills add owner/repo -g

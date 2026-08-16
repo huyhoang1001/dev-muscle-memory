@@ -26,7 +26,7 @@ This keeps context lean. It makes agents faster and more focused. And it means y
 
 ## What dev-muscle-memory Actually Is
 
-`dev-muscle-memory` is a collection of agent skills and agent configs built specifically for Rust development. It lives at [github.com/huyhoang1001/dev-muscle-memory](https://github.com/huyhoang1001/dev-muscle-memory) and follows the open [Agent Skills](https://agentskills.io/) standard, which means it works with Kiro, Claude Code, Cursor, Codex, and about 30 other agentic tools.
+`dev-muscle-memory` is a collection of agent skills and agent configs built specifically for Rust development. It lives at [github.com/huyhoang1001/dev-muscle-memory](https://github.com/huyhoang1001/dev-muscle-memory) and follows the open [Agent Skills](https://agentskills.io/) standard, which means it works with Kiro, Claude Code, Cursor, Codex, and 72+ agentic tools.
 
 There are three skills:
 
@@ -50,12 +50,24 @@ Here's where it gets interesting, and where most similar projects make a mistake
 dev-muscle-memory/
 ├── skills/          ← portable, platform-agnostic
 │   ├── rust-code-review/
+│   │   ├── SKILL.md
+│   │   ├── metadata.json
+│   │   └── references/
 │   ├── rust-dev/
+│   │   ├── SKILL.md
+│   │   ├── metadata.json
+│   │   └── references/
 │   └── repo-explorer/
-└── agents/
-    └── kiro/        ← platform-specific
-        ├── rust-code-review.json
-        └── rust-dev.json
+│       ├── SKILL.md
+│       ├── metadata.json
+│       └── references/
+├── agents/
+│   └── kiro/        ← platform-specific
+│       ├── rust-code-review.json
+│       └── rust-dev.json
+├── docs/            ← blog posts and guides
+├── skills.sh.json   ← grouping for skills.sh directory
+└── AGENTS.md        ← guidance for agents contributing to this repo
 ```
 
 Skills and agents solve different problems.
@@ -86,6 +98,9 @@ npx skills add huyhoang1001/dev-muscle-memory --list
 
 # Install only what you need
 npx skills add huyhoang1001/dev-muscle-memory --skill rust-code-review --skill rust-dev
+
+# For Kiro specifically — install directly into .kiro/skills/
+npx skills add huyhoang1001/dev-muscle-memory --all -a kiro-cli --copy -y
 
 # Install globally, available in all projects
 npx skills add huyhoang1001/dev-muscle-memory -g
