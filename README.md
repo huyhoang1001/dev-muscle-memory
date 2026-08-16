@@ -1,6 +1,8 @@
 # dev-muscle-memory
 
-Rust-focused AI agent skills. Install with one command, works across 30+ agents.
+Rust-focused AI agent skills. Install with one command, works across 72+ agents.
+
+[![skills.sh](https://skills.sh/b/huyhoang1001/dev-muscle-memory)](https://skills.sh/huyhoang1001/dev-muscle-memory)
 
 ## Install
 

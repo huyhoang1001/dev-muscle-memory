@@ -1,0 +1,21 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Rust",
+      "description": "Skills for writing, reviewing, and navigating production-quality Rust codebases.",
+      "skills": [
+        "rust-code-review",
+        "rust-dev"
+      ]
+    },
+    {
+      "title": "Navigation",
+      "description": "Skills for understanding and mapping unfamiliar codebases.",
+      "skills": [
+        "repo-explorer"
+      ]
+    }
+  ]
+}

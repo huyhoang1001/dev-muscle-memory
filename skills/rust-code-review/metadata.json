@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "author": "huyhoang1001",
+  "date": "August 2026",
+  "abstract": "Senior-level Rust code review covering what the compiler cannot catch: unsafe soundness, async/cancellation hazards, ownership misuse, error handling patterns, performance footguns, and idiomatic API design. Includes detailed reference checklists for unsafe code, async patterns, error handling, performance, and API design loaded on demand.",
+  "references": [
+    "https://agentskills.io/specification",
+    "https://github.com/awesome-skills/code-review-skill",
+    "https://doc.rust-lang.org/nomicon/",
+    "https://rust-lang.github.io/async-book/"
+  ]
+}

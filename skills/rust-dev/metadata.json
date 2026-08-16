@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "author": "huyhoang1001",
+  "date": "August 2026",
+  "abstract": "Hands-on Rust development assistant covering compiler error triage, idiomatic API design, pattern selection (typestate, state machine, sealed traits, retry), curated crate recommendations by use case, workspace and project structure, and CI/tooling setup.",
+  "references": [
+    "https://agentskills.io/specification",
+    "https://doc.rust-lang.org/book/",
+    "https://crates.io",
+    "https://rust-lang.github.io/api-guidelines/"
+  ]
+}

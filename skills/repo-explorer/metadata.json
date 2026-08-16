@@ -1,0 +1,9 @@
+{
+  "version": "1.0.0",
+  "author": "huyhoang1001",
+  "date": "August 2026",
+  "abstract": "Systematic repository mapping skill. Produces a structured map covering module responsibilities, architectural patterns (layered, event-driven, actor model, middleware pipeline), data flow from entry point to output, dependency analysis, coding conventions, and potential landmines.",
+  "references": [
+    "https://agentskills.io/specification"
+  ]
+}
